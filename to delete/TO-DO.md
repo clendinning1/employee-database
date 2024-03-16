@@ -1,7 +1,6 @@
 # TO-DO
 
 ## setup
-1. install inquirer
 2. install mysql2 ?
 3. create file org
 
