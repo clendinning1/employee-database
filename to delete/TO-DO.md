@@ -3,6 +3,7 @@
 ## setup
 1. install inquirer
 2. install mysql2 ?
+3. create file org
 
 ## inquirer steps
 1. I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
