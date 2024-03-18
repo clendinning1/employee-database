@@ -1,5 +1,5 @@
 INSERT INTO department (id, name)
-VALUES (INT PRIMARY KEY, VARCHAR(30))
+VALUES ()
 
 INSERT INTO role (id, title, salary, department_id)
 VALUES (INT PRIMARY KEY, VARCHAR(30), DECIMAL, INT)
