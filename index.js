@@ -7,8 +7,15 @@ function init() {
             {
                 type: 'list',
                 message: "What would you like to do?",
-                name: 'inqTextInput',
-                choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role"]
+                name: 'mainMenu',
+                choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role"],
+                validate: function (inqShapeType) {
+                    if (inqShapeType == "triangle" || "circle" || "square") {
+                        return true;
+                    } else {
+                        return "Please only select one shape";
+                    }
+                }
             },
             {
                 type: 'input',
@@ -33,19 +40,6 @@ function init() {
                     } else {
                         // if the hex code is valid, return "true" for the validator
                         return true;
-                    }
-                }
-            },
-            {
-                type: 'checkbox',
-                message: "Choose your shape (will default to circle):",
-                choices: ["triangle", "circle", "square"],
-                name: 'inqShapeType',
-                validate: function (inqShapeType) {
-                    if (inqShapeType == "triangle" || "circle" || "square") {
-                        return true;
-                    } else {
-                        return "Please only select one shape";
                     }
                 }
             },
