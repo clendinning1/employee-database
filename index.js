@@ -5,17 +5,10 @@ function init() {
     inquirer
         .prompt([
             {
-                type: 'input',
-                message: "Enter text (up to 3 characters):",
+                type: 'list',
+                message: "What would you like to do?",
                 name: 'inqTextInput',
-                // validating character input length
-                validate: function (input) {
-                    if (input.length >= 4) {
-                        return "Must enter 1-3 characters";
-                    } else {
-                        return true;
-                    }
-                }
+                choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role"]
             },
             {
                 type: 'input',
