@@ -1,8 +1,5 @@
 # TO-DO
 
-## setup
-3. create file org
-
 ## inquirer steps
 1. I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 2. WHEN I choose to view all departments THEN I am presented with a formatted table showing department names and department ids
