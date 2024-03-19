@@ -1,7 +1,6 @@
 # TO-DO
 
 ## inquirer steps
-1. I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 2. WHEN I choose to view all departments THEN I am presented with a formatted table showing department names and department ids
 3. WHEN I choose to view all roles THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
 4. WHEN I choose to view all employees THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
@@ -11,9 +10,8 @@
 8. WHEN I choose to update an employee role THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 
 ## sql stuff
-1. build the database
 2. You might also want to make your queries asynchronous. MySQL2 exposes a `.promise()` function on Connections to upgrade an existing non-Promise connection to use Promises. To learn more and make your queries asynchronous, refer to the [npm documentation on MySQL2](https://www.npmjs.com/package/mysql2).
-3. You might want to use a separate file that contains functions for performing specific SQL queries you'll need to use. A constructor function or class could be helpful for organizing these. You might also want to include a `seeds.sql` file to pre-populate your database, making the development of individual features much easier.
+3. You might want to use a separate file that contains functions for performing specific SQL queries you'll need to use. A constructor function or class could be helpful for organizing these.
 
 ## cleanup
 1. walkthrough video
