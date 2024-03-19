@@ -17,54 +17,6 @@ function init() {
                     }
                 }
             },
-            {
-                type: 'input',
-                message: "Enter text color (all strings should be one word; include hashtag for hex code):",
-                name: 'inqTextColor',
-                validate: function (input) {
-                    const isValidColor = color => {
-                        // using regex to make sure the hex code is valid
-                        const hexPattern = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-                        return hexPattern.test(color);
-                    }
-                    const testInput = isValidColor(input);
-                    if (testInput === false) {
-                        // if the hex code isn't valid, check to see if the input is a css color name instead.
-                        // .toLowerCase ensures case insensitivity for the check :)
-                        if (colorNames.includes(input.toLowerCase())) {
-                            return true;
-                        } else {
-                            // if not, error
-                            return "Must enter a valid color";
-                        }
-                    } else {
-                        // if the hex code is valid, return "true" for the validator
-                        return true;
-                    }
-                }
-            },
-            {
-                type: 'input',
-                message: "Enter shape color (all strings should be one word; include hashtag for hex code):",
-                name: 'inqShapeColor',
-                validate: function (input) {
-                    const isValidColor = color => {
-                        // All notes here are the same as the previous color input
-                        const hexPattern = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-                        return hexPattern.test(color);
-                    }
-                    const testInput = isValidColor(input);
-                    if (testInput === false) {
-                        if (colorNames.includes(input.toLowerCase())) {
-                            return true;
-                        } else {
-                            return "Must enter a valid color";
-                        }
-                    } else {
-                        return true;
-                    }
-                }
-            },
         ])
         .then((response) => {
             // svg strings that are the same for each shape
