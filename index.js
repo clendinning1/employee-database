@@ -1,4 +1,5 @@
-const { silliest } = require('./lib/subMenus');
+// import submenus from subMenus.js
+const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./lib/subMenus');
 
 // main menu inquirer funct
 function init() {
@@ -16,8 +17,7 @@ function init() {
 
             if (response.mainMenu == "View All Departments") {
                 // if you chose to View All Departments, run the following function
-                silliest();
-                // viewDepartments();
+                viewDepartments();
 
             } else if (response.mainMenu == "View All Roles") {
                 // if you chose to View All Roles, run the following function
@@ -47,30 +47,6 @@ function init() {
             return;
         });
 }
-
-
-function subMenu1() {
-    const inquirer = require('inquirer');
-    inquirer
-        .prompt([
-            {
-                type: 'list',
-                message: "Is it sillay time?",
-                name: 'sillayTime',
-                choices: ["yes", "yes", "yes"],
-            },
-        ])
-        .then((response) => {
-
-            if (response.mainMenu == "yes") {
-                console.log("yes!");
-            }
-
-            return;
-        });
-}
-
-
 
 
 
