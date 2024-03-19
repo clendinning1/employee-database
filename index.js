@@ -1,3 +1,5 @@
+const { silliest } = require('./lib/subMenus');
+
 // main menu inquirer funct
 function init() {
     const inquirer = require('inquirer');
@@ -14,7 +16,8 @@ function init() {
 
             if (response.mainMenu == "View All Departments") {
                 // if you chose to View All Departments, run the following function
-                viewDepartments();
+                silliest();
+                // viewDepartments();
 
             } else if (response.mainMenu == "View All Roles") {
                 // if you chose to View All Roles, run the following function
