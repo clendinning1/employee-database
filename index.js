@@ -1,5 +1,4 @@
-
-// inquirer funct
+// main menu inquirer funct
 function init() {
     const inquirer = require('inquirer');
     inquirer
@@ -13,64 +12,65 @@ function init() {
         ])
         .then((response) => {
 
-
             if (response.mainMenu == "View All Departments") {
-                // if you chose to View All Departments...
-                console.log("Viewing Departments!");
+                // if you chose to View All Departments, run the following function
+                viewDepartments();
 
-                // plugging in inputs from inquirer into svg file string
-                const newTriangle = new Triangle(response.inqTextInput, response.inqTextColor, response.inqShapeColor);
-                const fullTriangleString = svg1 + newTriangle.triangleString + svg2;
+            } else if (response.mainMenu == "View All Roles") {
+                // if you chose to View All Roles, run the following function
+                viewRoles();
 
-                // creating the svg file
-                function createTriangle() {
-                    const fs = require("fs");
+            } else if (response.mainMenu == "View All Employees") {
+                // if you chose to View All Employees, run the following function
+                viewEmployees();
 
-                    fs.appendFile('logo.svg', fullTriangleString, (err) =>
-                        err ? console.error(err) : console.log("Generated logo.svg")
-                    );
-                }
+            } else if (response.mainMenu == "Add a Department") {
+                // if you chose to Add a Department, run the following function
+                addDepartment();
 
-                createTriangle();
+            } else if (response.mainMenu == "Add a Role") {
+                // if you chose to Add a Role, run the following function
+                addRole();
 
-            } else if (response.inqShapeType == "square") {
-                // if square... (same as above)
-                console.log("Building your square...");
-
-                const newSquare = new Square(response.inqTextInput, response.inqTextColor, response.inqShapeColor);
-                const fullSquareString = svg1 + newSquare.squareString + svg2;
-
-                function createSquare() {
-                    const fs = require("fs");
-
-                    fs.appendFile('logo.svg', fullSquareString, (err) =>
-                        err ? console.error(err) : console.log("Generated logo.svg")
-                    );
-                }
-
-                createSquare();
+            } else if (response.mainMenu == "Add an Employee") {
+                // if you chose to Add an Employee, run the following function
+                addEmployee();
 
             } else {
-                // if circle... (same as above)
-                console.log("Building your circle...");
-
-                const newCircle = new Circle(response.inqTextInput, response.inqTextColor, response.inqShapeColor);
-                const fullCirString = svg1 + newCircle.circleString + svg2;
-
-                function createCircle() {
-                    const fs = require("fs");
-
-                    fs.appendFile('logo.svg', fullCirString, (err) =>
-                        err ? console.error(err) : console.log("Generated logo.svg")
-                    );
-                }
-
-                createCircle();
+                // if you chose to Update an Employee Role, run the following function
+                updateEmployeeRole();
             }
 
             return;
         });
 }
+
+
+function subMenu1() {
+    const inquirer = require('inquirer');
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                message: "Is it sillay time?",
+                name: 'sillayTime',
+                choices: ["yes", "yes", "yes"],
+            },
+        ])
+        .then((response) => {
+
+            if (response.mainMenu == "yes") {
+                console.log("yes!");
+            }
+
+            return;
+        });
+}
+
+
+
+
+
 
 // calling funct
 init();
