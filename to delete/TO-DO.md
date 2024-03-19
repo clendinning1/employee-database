@@ -10,10 +10,8 @@
 8. WHEN I choose to update an employee role THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 
 ## sql stuff
-1. build the database
 2. You might also want to make your queries asynchronous. MySQL2 exposes a `.promise()` function on Connections to upgrade an existing non-Promise connection to use Promises. To learn more and make your queries asynchronous, refer to the [npm documentation on MySQL2](https://www.npmjs.com/package/mysql2).
 3. You might want to use a separate file that contains functions for performing specific SQL queries you'll need to use. A constructor function or class could be helpful for organizing these.
-4. You might also want to include a `seeds.sql` file to pre-populate your database, making the development of individual features much easier.
 
 ## cleanup
 1. walkthrough video
