@@ -96,13 +96,7 @@ async function viewEmployeesQuery() {
 // 4. Add Department submenu
 async function addDepartmentQuery() {
 
-    // needs to take another inquirer funct first
-    // needs to add with the query not just pull
-    // needs to log the change to the console
-    // needs to return to the main menu
-
-
-
+    // inquirer funct for pulling input from user
     inquirer.prompt(addDepartmentPrompt)
         .then((response) => {
             // takes the user response and logs it to the console!
@@ -110,10 +104,15 @@ async function addDepartmentQuery() {
         });
 
 
+    // needs to add with the query, not just pull
+
+    // needs to log the change to the console
+
+    // needs to return to the main menu
 
 
 
-
+    
 
 
 
