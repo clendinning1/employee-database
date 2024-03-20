@@ -52,7 +52,7 @@ async function mainMenuFunct() {
 
     } else if (mainMenuResponse == 'Exit') {
         console.log('Exiting...');
-        throw '';
+        process.exit();
     } else {
         console.log('Error');
     }
