@@ -95,13 +95,14 @@ async function viewEmployeesFunct() {
 
 // 4. Add Department submenu
 async function addDepartmentFunct() {
-
-    // pulling input from the user via inquirer and async/await:
-    // ('addNewDepartment' is the name of the value in the prompts.js file)
+    // pulling input from the user via inquirer and async/await
+    // using `template literals` for the sql queries
+    // ('addNewDepartmentInq' is the name of the input value in the prompts.js file)
+    
+    // 'response' pulls the user input from the addDepartmentPrompt question
     const response = await inquirer.prompt(addDepartmentPrompt);
-    console.log('You inputted: ' + response.addNewDepartment);
 
-    // does the same thing as this promise.prototype.then:
+    // above line & console.log below do the same thing as this promise.prototype.then:
     // inquirer.prompt(addDepartmentPrompt)
     //     .then((response) => {
     //         // takes the user response and logs it to the console!
@@ -109,21 +110,17 @@ async function addDepartmentFunct() {
     //     });
 
 
-
-    // needs to add with the query, not just pull
-    // using a template literal for the input: `like this`
-    const addDepartmentQuery = `INSERT INTO department (name) VALUES ("${response.addNewDepartment}");`;
+    // query (add department name as inputted by user)
+    const addDepartmentQuery = `INSERT INTO department (name) VALUES ("${response.addNewDepartmentInq}");`;
+    // sending above query to the db
     const [results, data] = await db.query(addDepartmentQuery);
-    console.log(results);
-    console.log(data);
-
-    // needs to log the change to the console
-
-    // needs to return to the main menu
 
 
+    // log added department
+    console.log(`Added ${response.addNewDepartmentInq} department to the database.`);
 
-
+    // return to main menu
+    mainMenuFunct();
 }
 
 
@@ -163,7 +160,6 @@ async function runSQLDB() {
     // open main menu
     // mainMenuFunct();
 
-    addDepartmentFunct();
     
 }
 
