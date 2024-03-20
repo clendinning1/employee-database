@@ -1,10 +1,10 @@
-// import mysql2, inquirer, and inquirer prompts (for readability)
+// import mysql2, inquirer, and process for exit
 const mysql = require('mysql2/promise');
 const inquirer = require('inquirer');
+const { exit } = require('process');
 
 // inquirer prompts in prompts.js
 const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt, updateEmployeePrompt } = require('./lib/prompts');
-const { exit } = require('process');
 
 // db for running mysql server
 let db;
@@ -75,7 +75,7 @@ async function viewDepartmentFunct() {
     console.table(results);
 
     // return to main menu
-    // mainMenuFunct();
+    mainMenuFunct();
 }
 
 // 2. View All Roles submenu
