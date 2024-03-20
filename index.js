@@ -17,62 +17,95 @@ let db;
 // main menu inquirer funct
 async function mainMenuFunct() {
 
-    // this runs on startup and asks the following questions:
+    // mainMenuResponse reads whatever answer you give to the main menu prompt
     const mainMenuResponse = await inquirer.prompt(mainMenuPrompt);
 
+    switch (mainMenuResponse) {
+        case "View All Departments":
 
-    if (mainMenuResponse == "View All Departments") {
-        // if you chose to View All Departments...
-        console.log("Viewing Departments");
+            // if you chose to View All Departments...
+            console.log("Viewing Departments");
 
-    } else if (mainMenuResponse == "View All Roles") {
-        // if you chose to View All Roles...
-        console.log("Viewing Roles");
+            break;
 
-    } else if (mainMenuResponse == "View All Employees") {
-        // if you chose to View All Employees...
-        console.log("Viewing Employees");
+        case "View All Roles":
 
-    } else if (mainMenuResponse == "Add a Department") {
-        // if you chose to Add a Department...
+            // if you chose to View All Roles...
+            console.log("Viewing Roles");
 
-        console.log("Add a Department:");
+            break;
 
+        case "View All Employees":
 
-        inquirer.prompt(addDepartmentPrompt)
-            .then((response) => {
-                // then runs the following function:
-                addDepartmentQuery();
+            // if you chose to View All Employees...
+            console.log("Viewing Employees");
 
-                // CODE HERE: return to menu
-            });
+            break;
 
+        case "Add a Department":
 
-    } else if (mainMenuResponse == "Add a Role") {
-        // if you chose to Add a Role....
+            // if you chose to Add a Department...
+            console.log("Add a Department:");
 
-        console.log("Add a Role:");
+            break;
 
+        case "Add a Role":
 
-        inquirer.prompt(addRolePrompt).then((response) => { });
+            // if you chose to Add a Role....
+            console.log("Add a Role:");
 
+            break;
 
-    } else if (mainMenuResponse == "Add an Employee") {
-        // if you chose to Add an Employee...
+        case "Add an Employee":
 
-        console.log("Add an Employee:");
+            // if you chose to Add an Employee...
+            console.log("Add an Employee:");
 
-        inquirer.prompt(addEmployeePrompt).then((response) => { });
+            break;
 
+        case "Update an Employee Role":
 
-    } else if (mainMenuResponse == "Update an Employee Role") {
-        // if you chose to Update an Employee Role...
+            // if you chose to Update an Employee Role...
+            console.log("Update an Employee role:");
 
-        console.log("Update an Employee role:");
-
-        inquirer.prompt(updateEmployeePrompt).then((response) => { });
+            break;
     }
 }
+
+
+
+
+
+
+
+// inquirer.prompt(addDepartmentPrompt)
+//     .then((response) => {
+//         // then runs the following function:
+//         addDepartmentQuery();
+
+//         // CODE HERE: return to menu
+//     });
+
+
+//     } else if (mainMenuResponse == "Add a Role") {
+
+
+
+//         inquirer.prompt(addRolePrompt).then((response) => { });
+
+
+//     } else if (mainMenuResponse == "Add an Employee") {
+
+
+//         inquirer.prompt(addEmployeePrompt).then((response) => { });
+
+
+//     } else if (mainMenuResponse == "Update an Employee Role") {
+
+
+//         inquirer.prompt(updateEmployeePrompt).then((response) => { });
+//     }
+// }
 
 
 
