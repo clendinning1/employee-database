@@ -17,14 +17,43 @@ async function mainMenuFunct() {
     // response reads whatever answer you give to the main menu prompt
     const response = await inquirer.prompt(mainMenuPrompt);
 
-    console.log(response.mainMenuInq);
+    // variable for cleaner code
+    const mainMenuResponse = response.mainMenuInq
 
-    if (response.mainMenuInq == 'View All Departments'){
-        console.log('selected to view dpts');
-    } else if (response.mainMenuInq == 'View All Roles'){
-        console.log('selected to view roles');
+    // MENU OUTPUTS
+    if (mainMenuResponse == 'View All Departments') {
+        console.log(mainMenuResponse);
+        viewDepartmentFunct();
+
+    } else if (mainMenuResponse == 'View All Roles') {
+        console.log(mainMenuResponse);
+        viewRolesFunct();
+
+    } else if (mainMenuResponse == 'View All Employees') {
+        console.log(mainMenuResponse);
+        viewEmployeesFunct();
+
+    } else if (mainMenuResponse == 'Add a Department') {
+        console.log(mainMenuResponse);
+        addDepartmentFunct();
+
+    } else if (mainMenuResponse == 'Add a Role') {
+        console.log(mainMenuResponse);
+        addRoleFunct();
+
+    } else if (mainMenuResponse == 'Add an Employee') {
+        console.log(mainMenuResponse);
+        addEmployeeFunct();
+
+    } else if (mainMenuResponse == 'Update an Employee Role') {
+        console.log(mainMenuResponse);
+        updateEmployeeFunct();
+
+    } else if (mainMenuResponse == 'Exit') {
+        console.log('Exiting...');
+        // CODE HERE
     } else {
-        console.log('other');
+        console.log('Error');
     }
 
 }
@@ -83,7 +112,7 @@ async function addDepartmentFunct() {
     // pulling input from the user via inquirer and async/await
     // using `template literals` for the sql queries
     // ('addNewDepartmentInq' is the name of the input value in the prompts.js file)
-    
+
     // 'response' pulls the user input from the addDepartmentPrompt question
     const response = await inquirer.prompt(addDepartmentPrompt);
 
@@ -111,7 +140,7 @@ async function addDepartmentFunct() {
 
 // 5. Add Role submenu
 async function addRoleFunct() {
-    
+
 
     // pulling the user input from the addRolePrompt questions
     const response = await inquirer.prompt(addRolePrompt);
@@ -140,7 +169,7 @@ async function addRoleFunct() {
 
 // 6. Add Employee submenu
 async function addEmployeeFunct() {
-addEmployeePrompt
+    addEmployeePrompt
     // pulling the user input from the addEmployeePrompt questions
     const response = await inquirer.prompt(addEmployeePrompt);
 
@@ -167,7 +196,7 @@ addEmployeePrompt
 
 
 // 7. Update Employee Role submenu
-async function updateEmployeeRoleFunct() {
+async function updateEmployeeFunct() {
     // CODE HERE
 }
 
