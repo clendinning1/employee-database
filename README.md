@@ -3,3 +3,4 @@
 - https://www.mysqltutorial.org/mysql-basics/
 - https://sidorares.github.io/node-mysql2/docs/documentation/
 - https://www.smashingmagazine.com/2020/11/comparison-async-await-versus-then-catch/
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals

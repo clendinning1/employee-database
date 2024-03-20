@@ -49,18 +49,18 @@ async function mainMenuFunct() {
 
 // SUBMENUS
 
-// 1. View All Departments submenu
-async function viewDepartmentsFunct() {
+// 1. View All Department submenu
+async function viewDepartmentFunct() {
 
     // query the db
-    const viewDepartmentsQuery = `SELECT * FROM department;`;
-    const [results, data] = await db.query(viewDepartmentsQuery);
+    const viewDepartmentQuery = `SELECT * FROM department;`;
+    const [results, data] = await db.query(viewDepartmentQuery);
 
     // log results from db query
     console.log(results);
 
     // return to main menu
-    mainMenuFunct();
+    // mainMenuFunct();
 }
 
 // 2. View All Roles submenu
@@ -111,9 +111,11 @@ async function addDepartmentFunct() {
 
 
     // needs to add with the query, not just pull
-    const addDepartmentQuery = `SELECT * FROM employees;`;
+    // using a template literal for the input: `like this`
+    const addDepartmentQuery = `INSERT INTO department (id, name) VALUES (101, "${response.addNewDepartment}");`;
     const [results, data] = await db.query(addDepartmentQuery);
-
+    console.log(results);
+    console.log(data);
 
     // needs to log the change to the console
 
@@ -162,6 +164,7 @@ async function runSQLDB() {
     // mainMenuFunct();
 
     addDepartmentFunct();
+    
 }
 
 runSQLDB();
