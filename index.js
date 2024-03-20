@@ -111,7 +111,7 @@ async function addDepartmentFunct() {
 
 
     // query (add department name as inputted by user)
-    const addDepartmentQuery = `INSERT INTO department (name) VALUES ("${response.addNewDepartmentInq}");`;
+    const addDepartmentQuery = `INSERT INTO department (name) VALUES ('${response.addNewDepartmentInq}');`;
     // sending above query to the db
     const [results, data] = await db.query(addDepartmentQuery);
 
@@ -141,7 +141,7 @@ async function addRoleFunct() {
 
 
     // query
-    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ("${newTitle}", ${newSal}, ${newDept});`;
+    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, ${newDept});`;
     // send query to db
     const [results, data] = await db.query(addRoleQuery);
 
@@ -168,7 +168,7 @@ addEmployeePrompt
     const newManager = response.addEmployeeManagerInq
 
     // query
-    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ("${newFirstName}", "${newLastName}", ${newRole}, ${newManager});`;
+    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${newFirstName}', '${newLastName}', ${newRole}, ${newManager});`;
     // send query to db
     const [results, data] = await db.query(addEmployeeQuery);
 
@@ -176,9 +176,15 @@ addEmployeePrompt
     console.log(`Added ${newFirstName} ${newLastName} to the database.`);
 
     // return to main menu
+    mainMenuFunct();
 }
 
 
+
+// 7. Update Employee Role submenu
+async function updateEmployeeRoleFunct() {
+    // CODE HERE
+}
 
 
 
@@ -209,9 +215,7 @@ async function runSQLDB() {
     );
 
     // open main menu
-    // mainMenuFunct();
-
-    addEmployeeFunct();
+    mainMenuFunct();
 }
 
 runSQLDB();
