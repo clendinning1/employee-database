@@ -153,6 +153,31 @@ async function addRoleFunct() {
 }
 
 
+// 6. Add Employee submenu
+async function addEmployeeFunct() {
+addEmployeePrompt
+    // pulling the user input from the addEmployeePrompt questions
+    const response = await inquirer.prompt(addEmployeePrompt);
+
+    // variables for cleaner query
+    // (addEmployee[X]Inq is the location for each input in prompts.js)
+    // (response.addEmployee[X]Inq calls the user input to this particular response)
+    const newFirstName = response.addEmployeeFirstNameInq
+    const newLastName = response.addEmployeeLastNameInq
+    const newRole = response.addEmployeeRoleInq
+    const newManager = response.addEmployeeManagerInq
+
+    // query
+    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ("${newFirstName}", "${newLastName}", ${newRole}, ${newManager});`;
+    // send query to db
+    const [results, data] = await db.query(addEmployeeQuery);
+
+    // log added role
+    console.log(`Added ${newFirstName} ${newLastName} to the database.`);
+
+    // return to main menu
+}
+
 
 
 
@@ -186,7 +211,7 @@ async function runSQLDB() {
     // open main menu
     // mainMenuFunct();
 
-    addRoleFunct();
+    addEmployeeFunct();
 }
 
 runSQLDB();
