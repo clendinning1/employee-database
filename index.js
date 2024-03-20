@@ -72,7 +72,7 @@ async function viewDepartmentFunct() {
     const [results, data] = await db.query(viewDepartmentQuery);
 
     // log results from db query
-    console.log(results);
+    console.table(results);
 
     // return to main menu
     // mainMenuFunct();
@@ -86,7 +86,7 @@ async function viewRolesFunct() {
     const [results, data] = await db.query(viewRolesQuery);
 
     // log results from db query
-    console.log(results);
+    console.table(results);
 
     // return to main menu
     mainMenuFunct();
@@ -101,7 +101,7 @@ async function viewEmployeesFunct() {
     const [results, data] = await db.query(viewEmployeesQuery);
 
     // log results from db query
-    console.log(results);
+    console.table(results);
 
     // return to main menu
     mainMenuFunct();
