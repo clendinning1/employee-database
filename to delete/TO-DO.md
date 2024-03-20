@@ -15,7 +15,7 @@
 
 // 1. choices need to pull from db in prompts.js
 // 2. the final additive is an update rather than an add
-// 3. get the main menu functioning properly
+// 3. how to exit ?
 // 4. FORMAT LISTS
 // THEN
 // potentially done??? do recording and submit???

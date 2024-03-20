@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 
 // inquirer prompts in prompts.js
 const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt, updateEmployeePrompt } = require('./lib/prompts');
+const { exit } = require('process');
 
 // db for running mysql server
 let db;
@@ -51,7 +52,7 @@ async function mainMenuFunct() {
 
     } else if (mainMenuResponse == 'Exit') {
         console.log('Exiting...');
-        // CODE HERE
+        throw '';
     } else {
         console.log('Error');
     }
