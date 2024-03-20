@@ -5,11 +5,6 @@ const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEm
 
 
 
-
-
-
-
-
 // main menu inquirer funct
 function init() {
     const inquirer = require('inquirer');
