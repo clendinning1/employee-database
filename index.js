@@ -126,14 +126,27 @@ async function addDepartmentFunct() {
 
 // 5. Add Role submenu
 async function addRoleFunct() {
+    
 
-    // pull the user input from the addRolePrompt questions
+    // pulling the user input from the addRolePrompt questions
+    const response = await inquirer.prompt(addRolePrompt);
 
 
-    // query 
+    // variables for cleaner query
+    // (addRole[X]Inq is the location for each input in prompts.js)
+    // (response.addRole[X]Inq calls the user input to this particular response)
+    const newTitle = response.addRoleTitleInq
+    const newSal = response.addRoleSalaryInq
+    const newDept = response.addRoleDepartmentInq
+    
+
+    // query
+    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ("${newTitle}", ${newSal}, ${newDept});`;
     // send query to db
+    const [results, data] = await db.query(addRoleQuery);
 
     // log added role
+    console.log(`Added ${newTitle} role to the database.`);
 
     // return to main menu
     
@@ -173,7 +186,7 @@ async function runSQLDB() {
     // open main menu
     // mainMenuFunct();
 
-    
+    addRoleFunct();
 }
 
 runSQLDB();
