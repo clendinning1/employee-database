@@ -14,35 +14,14 @@ let db;
 // main menu inquirer funct
 async function mainMenuFunct() {
 
-    // mainMenuResponse reads whatever answer you give to the main menu prompt
-    const mainMenuResponse = await inquirer.prompt(mainMenuPrompt);
+    // response reads whatever answer you give to the main menu prompt
+    const response = await inquirer.prompt(mainMenuPrompt);
 
-    // if/else doesn't work, neither does switch/case. how do i use this other than .then?
-    // similarly to the es7 example on mysql2, maybe?
+    console.log(response.mainMenuInq);
+
+    
 
 }
-
-
-//     } else if (mainMenuResponse == 'Add a Role') {
-
-
-
-//         inquirer.prompt(addRolePrompt).then((response) => { });
-
-
-//     } else if (mainMenuResponse == 'Add an Employee') {
-
-
-//         inquirer.prompt(addEmployeePrompt).then((response) => { });
-
-
-//     } else if (mainMenuResponse == 'Update an Employee Role') {
-
-
-//         inquirer.prompt(updateEmployeePrompt).then((response) => { });
-//     }
-// }
-
 
 
 
