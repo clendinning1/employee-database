@@ -2,9 +2,6 @@
 const mysql = require('mysql2/promise');
 const inquirer = require('inquirer');
 
-// import submenus from subMenus.js
-const { viewDepartmentsQuery, viewRolesQuery, viewEmployeesQuery, addDepartmentQuery, addRoleQuery, addEmployeeQuery, updateEmployeeRoleQuery } = require('./lib/queries');
-
 // inquirer prompts in prompts.js
 const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt, updateEmployeePrompt } = require('./lib/prompts');
 
@@ -20,63 +17,10 @@ async function mainMenuFunct() {
     // mainMenuResponse reads whatever answer you give to the main menu prompt
     const mainMenuResponse = await inquirer.prompt(mainMenuPrompt);
 
-    switch (mainMenuResponse) {
-        case "View All Departments":
+    // if/else doesn't work, neither does switch/case. how do i use this other than .then?
+    // similarly to the es7 example on mysql2, maybe?
 
-            // if you chose to View All Departments...
-            console.log("Viewing Departments");
-
-            break;
-
-        case "View All Roles":
-
-            // if you chose to View All Roles...
-            console.log("Viewing Roles");
-
-            break;
-
-        case "View All Employees":
-
-            // if you chose to View All Employees...
-            console.log("Viewing Employees");
-
-            break;
-
-        case "Add a Department":
-
-            // if you chose to Add a Department...
-            console.log("Add a Department:");
-
-            break;
-
-        case "Add a Role":
-
-            // if you chose to Add a Role....
-            console.log("Add a Role:");
-
-            break;
-
-        case "Add an Employee":
-
-            // if you chose to Add an Employee...
-            console.log("Add an Employee:");
-
-            break;
-
-        case "Update an Employee Role":
-
-            // if you chose to Update an Employee Role...
-            console.log("Update an Employee role:");
-
-            break;
-    }
 }
-
-
-
-
-
-
 
 // inquirer.prompt(addDepartmentPrompt)
 //     .then((response) => {
@@ -111,6 +55,64 @@ async function mainMenuFunct() {
 
 
 
+// SUBMENUS
+
+// 1. View All Departments submenu
+async function viewDepartmentsQuery() {
+    // query the db
+    const viewDptQuery = `SELECT * FROM department;`;
+    const [results, data] = await db.query(viewDptQuery);
+
+    // log results from db query
+    console.log(results);
+
+    // return to main menu
+    mainMenuFunct();
+}
+
+// 2. View All Roles submenu
+async function viewRolesQuery() {
+    // query the db
+    const viewRolesQuery = `SELECT * FROM roles;`;
+    const [results, data] = await db.query(viewRolesQuery);
+
+    // log results from db query
+    console.log(results);
+
+    // return to main menu
+    mainMenuFunct();
+}
+
+
+// 3. View Employees submenu
+async function viewEmployeesQuery() {
+    // query the db
+    const viewEmployeesQuery = `SELECT * FROM employees;`;
+    const [results, data] = await db.query(viewEmployeesQuery);
+
+    // log results from db query
+    console.log(results);
+
+    // return to main menu
+    mainMenuFunct();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -119,7 +121,7 @@ async function mainMenuFunct() {
 
 
 // connect to mysql
-async function run() {
+async function runSQLDB() {
     db = await mysql.createConnection(
         {
             host: 'localhost',
@@ -136,4 +138,4 @@ async function run() {
     mainMenuFunct();
 }
 
-run();
+runSQLDB();
