@@ -112,7 +112,7 @@ async function addDepartmentFunct() {
 
     // needs to add with the query, not just pull
     // using a template literal for the input: `like this`
-    const addDepartmentQuery = `INSERT INTO department (id, name) VALUES (101, "${response.addNewDepartment}");`;
+    const addDepartmentQuery = `INSERT INTO department (name) VALUES ("${response.addNewDepartment}");`;
     const [results, data] = await db.query(addDepartmentQuery);
     console.log(results);
     console.log(data);
