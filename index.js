@@ -33,8 +33,21 @@ function init() {
                 viewEmployeesQuery();
 
             } else if (response.mainMenu == "Add a Department") {
-                // if you chose to Add a Department, run the following function
-                addDepartmentQuery();
+                // if you chose to Add a Department
+                inquirer
+                    .prompt([
+                        {
+                            type: 'input',
+                            message: "What is the name of the department?",
+                            name: 'addNewDepartment',
+                        },
+                    ])
+                    .then((response) => {
+
+                        addDepartmentQuery();
+
+                        // CODE HERE: return to menu
+                    });
 
             } else if (response.mainMenu == "Add a Role") {
                 // if you chose to Add a Role, run the following function
