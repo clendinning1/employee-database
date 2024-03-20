@@ -1,5 +1,5 @@
 // import submenus from subMenus.js
-const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, run } = require('./lib/subMenus');
+const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./lib/subMenus');
 
 
 
@@ -8,6 +8,7 @@ const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEm
 // main menu inquirer funct
 function init() {
     const inquirer = require('inquirer');
+    // this runs on startup and asks the following questions:
     inquirer
         .prompt([
             {
