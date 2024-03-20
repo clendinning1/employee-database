@@ -71,7 +71,7 @@ async function mainMenuFunct() {
         console.log("Update an Employee role:");
 
         inquirer.prompt(updateEmployeePrompt).then((response) => { });
-    } else {}
+    }
 }
 
 
