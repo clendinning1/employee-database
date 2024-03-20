@@ -23,20 +23,20 @@ async function mainMenuFunct() {
 }
 
 
-//     } else if (mainMenuResponse == "Add a Role") {
+//     } else if (mainMenuResponse == 'Add a Role') {
 
 
 
 //         inquirer.prompt(addRolePrompt).then((response) => { });
 
 
-//     } else if (mainMenuResponse == "Add an Employee") {
+//     } else if (mainMenuResponse == 'Add an Employee') {
 
 
 //         inquirer.prompt(addEmployeePrompt).then((response) => { });
 
 
-//     } else if (mainMenuResponse == "Update an Employee Role") {
+//     } else if (mainMenuResponse == 'Update an Employee Role') {
 
 
 //         inquirer.prompt(updateEmployeePrompt).then((response) => { });
@@ -50,11 +50,11 @@ async function mainMenuFunct() {
 // SUBMENUS
 
 // 1. View All Departments submenu
-async function viewDepartmentsQuery() {
+async function viewDepartmentsFunct() {
 
     // query the db
-    const viewDptQuery = `SELECT * FROM department;`;
-    const [results, data] = await db.query(viewDptQuery);
+    const viewDepartmentsQuery = `SELECT * FROM department;`;
+    const [results, data] = await db.query(viewDepartmentsQuery);
 
     // log results from db query
     console.log(results);
@@ -64,7 +64,7 @@ async function viewDepartmentsQuery() {
 }
 
 // 2. View All Roles submenu
-async function viewRolesQuery() {
+async function viewRolesFunct() {
 
     // query the db
     const viewRolesQuery = `SELECT * FROM roles;`;
@@ -79,7 +79,7 @@ async function viewRolesQuery() {
 
 
 // 3. View Employees submenu
-async function viewEmployeesQuery() {
+async function viewEmployeesFunct() {
 
     // query the db
     const viewEmployeesQuery = `SELECT * FROM employees;`;
@@ -94,11 +94,12 @@ async function viewEmployeesQuery() {
 
 
 // 4. Add Department submenu
-async function addDepartmentQuery() {
+async function addDepartmentFunct() {
 
     // pulling input from the user via inquirer and async/await:
+    // ('addNewDepartment' is the name of the value in the prompts.js file)
     const response = await inquirer.prompt(addDepartmentPrompt);
-    console.log(response.addNewDepartment);
+    console.log('You inputted: ' + response.addNewDepartment);
 
     // does the same thing as this promise.prototype.then:
     // inquirer.prompt(addDepartmentPrompt)
@@ -109,10 +110,10 @@ async function addDepartmentQuery() {
 
 
 
-
-
-
     // needs to add with the query, not just pull
+    const addDepartmentQuery = `SELECT * FROM employees;`;
+    const [results, data] = await db.query(addDepartmentQuery);
+
 
     // needs to log the change to the console
 
@@ -121,19 +122,6 @@ async function addDepartmentQuery() {
 
 
 
-
-
-
-
-
-    // query the db
-    // const viewEmployeesQuery = `SELECT * FROM employees;`;
-    // const [results, data] = await db.query(viewEmployeesQuery);
-
-
-    // log the change to the console.
-    // "response.addRoleName" is the name of the new department
-    // console.log("Added " + response.addRoleName + " role to the database.");
 }
 
 
@@ -173,7 +161,7 @@ async function runSQLDB() {
     // open main menu
     // mainMenuFunct();
 
-    addDepartmentQuery();
+    addDepartmentFunct();
 }
 
 runSQLDB();
