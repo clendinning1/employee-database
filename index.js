@@ -22,14 +22,6 @@ async function mainMenuFunct() {
 
 }
 
-// inquirer.prompt(addDepartmentPrompt)
-//     .then((response) => {
-//         // then runs the following function:
-//         addDepartmentQuery();
-
-//         // CODE HERE: return to menu
-//     });
-
 
 //     } else if (mainMenuResponse == "Add a Role") {
 
@@ -107,6 +99,25 @@ async function addDepartmentQuery() {
     // needs to take another inquirer funct first
     // needs to add with the query not just pull
     // needs to log the change to the console
+    // needs to return to the main menu
+
+
+
+    inquirer.prompt(addDepartmentPrompt)
+        .then((response) => {
+            // takes the user response and logs it to the console!
+            console.log(response.addNewDepartment);
+        });
+
+
+
+
+
+
+
+
+
+
 
     // query the db
     // const viewEmployeesQuery = `SELECT * FROM employees;`;
@@ -153,7 +164,9 @@ async function runSQLDB() {
     );
 
     // open main menu
-    mainMenuFunct();
+    // mainMenuFunct();
+
+    addDepartmentQuery();
 }
 
 runSQLDB();
