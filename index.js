@@ -124,7 +124,20 @@ async function addDepartmentFunct() {
 }
 
 
+// 5. Add Role submenu
+async function addRoleFunct() {
 
+    // pull the user input from the addRolePrompt questions
+
+
+    // query 
+    // send query to db
+
+    // log added role
+
+    // return to main menu
+    
+}
 
 
 
