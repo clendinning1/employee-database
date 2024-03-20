@@ -1,5 +1,5 @@
 // import submenus from subMenus.js
-const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./lib/subMenus');
+const { viewDepartmentsQuery, viewRolesQuery, viewEmployeesQuery, addDepartmentQuery, addRoleQuery, addEmployeeQuery, updateEmployeeRoleQuery } = require('./lib/subMenus');
 
 
 
@@ -22,31 +22,31 @@ function init() {
 
             if (response.mainMenu == "View All Departments") {
                 // if you chose to View All Departments, run the following function
-                viewDepartments();
+                viewDepartmentsQuery();
 
             } else if (response.mainMenu == "View All Roles") {
                 // if you chose to View All Roles, run the following function
-                viewRoles();
+                viewRolesQuery();
 
             } else if (response.mainMenu == "View All Employees") {
                 // if you chose to View All Employees, run the following function
-                viewEmployees();
+                viewEmployeesQuery();
 
             } else if (response.mainMenu == "Add a Department") {
                 // if you chose to Add a Department, run the following function
-                addDepartment();
+                addDepartmentQuery();
 
             } else if (response.mainMenu == "Add a Role") {
                 // if you chose to Add a Role, run the following function
-                addRole();
+                addRoleQuery();
 
             } else if (response.mainMenu == "Add an Employee") {
                 // if you chose to Add an Employee, run the following function
-                addEmployee();
+                addEmployeeQuery();
 
             } else {
                 // if you chose to Update an Employee Role, run the following function
-                updateEmployeeRole();
+                updateEmployeeRoleQuery();
             }
         });
 }
