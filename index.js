@@ -1,5 +1,14 @@
 // import submenus from subMenus.js
-const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./lib/subMenus');
+const { viewDepartments, viewRoles, viewEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, run } = require('./lib/subMenus');
+
+
+
+
+
+
+
+
+
 
 // main menu inquirer funct
 function init() {
@@ -43,8 +52,6 @@ function init() {
                 // if you chose to Update an Employee Role, run the following function
                 updateEmployeeRole();
             }
-
-            return;
         });
 }
 
