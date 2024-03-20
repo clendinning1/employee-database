@@ -96,12 +96,20 @@ async function viewEmployeesQuery() {
 // 4. Add Department submenu
 async function addDepartmentQuery() {
 
-    // inquirer funct for pulling input from user
-    inquirer.prompt(addDepartmentPrompt)
-        .then((response) => {
-            // takes the user response and logs it to the console!
-            console.log(response.addNewDepartment);
-        });
+    // pulling input from the user via inquirer and async/await:
+    const response = await inquirer.prompt(addDepartmentPrompt);
+    console.log(response.addNewDepartment);
+
+    // does the same thing as this promise.prototype.then:
+    // inquirer.prompt(addDepartmentPrompt)
+    //     .then((response) => {
+    //         // takes the user response and logs it to the console!
+    //         console.log(response.addNewDepartment);
+    //     });
+
+
+
+
 
 
     // needs to add with the query, not just pull
@@ -112,7 +120,7 @@ async function addDepartmentQuery() {
 
 
 
-    
+
 
 
 
