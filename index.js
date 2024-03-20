@@ -19,7 +19,13 @@ async function mainMenuFunct() {
 
     console.log(response.mainMenuInq);
 
-    
+    if (response.mainMenuInq == 'View All Departments'){
+        console.log('selected to view dpts');
+    } else if (response.mainMenuInq == 'View All Roles'){
+        console.log('selected to view roles');
+    } else {
+        console.log('other');
+    }
 
 }
 
