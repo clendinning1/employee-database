@@ -138,7 +138,7 @@ async function addRoleFunct() {
     const newTitle = response.addRoleTitleInq
     const newSal = response.addRoleSalaryInq
     const newDept = response.addRoleDepartmentInq
-    
+
 
     // query
     const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ("${newTitle}", ${newSal}, ${newDept});`;
@@ -149,7 +149,7 @@ async function addRoleFunct() {
     console.log(`Added ${newTitle} role to the database.`);
 
     // return to main menu
-    
+    mainMenuFunct();
 }
 
 
