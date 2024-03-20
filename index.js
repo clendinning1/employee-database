@@ -59,6 +59,7 @@ async function mainMenuFunct() {
 
 // 1. View All Departments submenu
 async function viewDepartmentsQuery() {
+
     // query the db
     const viewDptQuery = `SELECT * FROM department;`;
     const [results, data] = await db.query(viewDptQuery);
@@ -72,6 +73,7 @@ async function viewDepartmentsQuery() {
 
 // 2. View All Roles submenu
 async function viewRolesQuery() {
+
     // query the db
     const viewRolesQuery = `SELECT * FROM roles;`;
     const [results, data] = await db.query(viewRolesQuery);
@@ -86,6 +88,7 @@ async function viewRolesQuery() {
 
 // 3. View Employees submenu
 async function viewEmployeesQuery() {
+
     // query the db
     const viewEmployeesQuery = `SELECT * FROM employees;`;
     const [results, data] = await db.query(viewEmployeesQuery);
@@ -98,7 +101,22 @@ async function viewEmployeesQuery() {
 }
 
 
+// 4. Add Department submenu
+async function addDepartmentQuery() {
 
+    // needs to take another inquirer funct first
+    // needs to add with the query not just pull
+    // needs to log the change to the console
+
+    // query the db
+    // const viewEmployeesQuery = `SELECT * FROM employees;`;
+    // const [results, data] = await db.query(viewEmployeesQuery);
+
+
+    // log the change to the console.
+    // "response.addRoleName" is the name of the new department
+    // console.log("Added " + response.addRoleName + " role to the database.");
+}
 
 
 
