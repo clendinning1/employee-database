@@ -209,12 +209,6 @@ async function updateEmployeeFunct() {
 
 
 
-
-
-
-
-
-
 // connect to mysql
 async function runSQLDB() {
     db = await mysql.createConnection(
