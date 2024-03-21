@@ -138,18 +138,17 @@ async function addDepartmentFunct() {
     mainMenuFunct();
 }
 
-
-
 // choices for add role submenu
-const secondAddRolePrompt = [
+let secondAddRolePrompt = async () => {[
     {
         type: 'list',
         message: "What department does the role belong to?",
         name: 'addRoleDepartmentInq',
         // choices runs above funct that returns the array of depts
-        choices: viewDepartmentFunct()
+        choices:
+        await viewDepartmentFunct()
     },
-]
+]}
 
 // 5. Add Role submenu
 async function addRoleFunct() {
