@@ -138,37 +138,25 @@ async function addDepartmentFunct() {
     mainMenuFunct();
 }
 
-// choices for add role submenu
-let secondAddRolePrompt = async () => {[
-    {
-        type: 'list',
-        message: "What department does the role belong to?",
-        name: 'addRoleDepartmentInq',
-        // choices runs above funct that returns the array of depts
-        choices:
-        await viewDepartmentFunct()
-    },
-]}
 
 // 5. Add Role submenu
 async function addRoleFunct() {
 
 
     // pulling the user input from the addRolePrompt questions
-    const firstResponse = await inquirer.prompt(addRolePrompt);
-    const secondResponse = await inquirer.prompt(secondAddRolePrompt);
+    const response = await inquirer.prompt(addRolePrompt);
 
 
     // variables for cleaner query
     // (addRole[X]Inq is the location for each input in prompts.js)
     // (response.addRole[X]Inq calls the user input to this particular response)
-    const newTitle = firstResponse.addRoleTitleInq
-    const newSal = firstResponse.addRoleSalaryInq
+    const newTitle = response.addRoleTitleInq
+    const newSal = response.addRoleSalaryInq
 
     // CODE HERE
     // need to be able to differentiate
     // maybe i should just put the choices prompt separate in this function?
-    // idk ughhhhhhhhhhhhhhhhhhhhhhhhh
+    // idk 
     const newDeptName = ''
     const newDeptID = ''
 
