@@ -170,7 +170,7 @@ async function addRoleFunct() {
 
 // 6. Add Employee submenu
 async function addEmployeeFunct() {
-    addEmployeePrompt
+
     // pulling the user input from the addEmployeePrompt questions
     const response = await inquirer.prompt(addEmployeePrompt);
 
@@ -198,7 +198,25 @@ async function addEmployeeFunct() {
 
 // 7. Update Employee Role submenu
 async function updateEmployeeFunct() {
-    // CODE HERE
+
+    // pulling the user input from the updateEmployeePrompt questions
+    const response = await inquirer.prompt(updateEmployeePrompt);
+
+    // variables for cleaner query
+    const employeeChoice = response.employeeToUpdateInq
+    const employeeNewRole = response.updatedEmployeeRoleInq
+
+    // query
+    // translate into sql: `replace [employeeChoice]'s role with [employeeNewRole]`
+    // const updateEmployeeQuery = ;
+    // send query to db
+    const [results, data] = await db.query(updateEmployeeQuery);
+
+    // log added role
+    console.log(`Updated ${employeeChoice}'s role`);
+
+    // return to main menu
+    mainMenuFunct();
 }
 
 
