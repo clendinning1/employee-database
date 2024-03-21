@@ -138,25 +138,18 @@ async function addDepartmentFunct() {
     mainMenuFunct();
 }
 
-const departmentChoices = async () => {
-    const departmentQuery = `SELECT id AS value, name FROM department;`;
-    const departments = await connection.query(departmentQuery);
-    return departments[0];
-};
+
 
 // choices for add role submenu
-const secondAddRolePrompt = async () => {[
+const secondAddRolePrompt = [
     {
         type: 'list',
         message: "What department does the role belong to?",
         name: 'addRoleDepartmentInq',
         // choices runs above funct that returns the array of depts
-        choices: await departmentChoices(),
-        when(answers) {
-            return answers.task === 'View a Department Budget'
-        },
-    }
-]}
+        choices: viewDepartmentFunct()
+    },
+]
 
 // 5. Add Role submenu
 async function addRoleFunct() {
