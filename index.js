@@ -13,7 +13,7 @@ let db;
 
 
 // main menu inquirer funct
-async function mainMenuFunct() {
+async function mainMenuFunct(db) {
 
     // response reads whatever answer you give to the main menu prompt
     const response = await inquirer.prompt(mainMenuPrompt);
@@ -40,7 +40,7 @@ async function mainMenuFunct() {
 
     } else if (mainMenuResponse == 'Add a Role') {
         console.log(mainMenuResponse);
-        addRoleFunct();
+        addRoleFunct(db);
 
     } else if (mainMenuResponse == 'Add an Employee') {
         console.log(mainMenuResponse);
@@ -139,12 +139,27 @@ async function addDepartmentFunct() {
 }
 
 
+const addRolePrompt2 = async () => {[
+    {
+        type: 'list',
+        message: "What department does the role belong to?",
+        name: 'addRoleDepartmentInq',
+        // choices runs above funct that returns the array of depts
+        choices: await db.query(`SELECT * FROM department;`)
+    },
+]};
+
+
+
+
+
 // 5. Add Role submenu
-async function addRoleFunct() {
+async function addRoleFunct(db) {
 
 
     // pulling the user input from the addRolePrompt questions
     const response = await inquirer.prompt(addRolePrompt);
+    const response2 = await inquirer.prompt(addRolePrompt2);
 
 
     // variables for cleaner query
@@ -152,11 +167,17 @@ async function addRoleFunct() {
     // (response.addRole[X]Inq calls the user input to this particular response)
     const newTitle = response.addRoleTitleInq
     const newSal = response.addRoleSalaryInq
-    const newDept = response.addRoleDepartmentInq
+
+    // CODE HERE
+    // need to be able to differentiate
+    // maybe i should just put the choices prompt separate in this function?
+    // idk 
+    const newDeptName = ''
+    const newDeptID = ''
 
 
     // query
-    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, ${newDept});`;
+    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, '${newDeptID}');`;
     // send query to db
     const [results, data] = await db.query(addRoleQuery);
 
@@ -170,7 +191,7 @@ async function addRoleFunct() {
 
 // 6. Add Employee submenu
 async function addEmployeeFunct() {
-    addEmployeePrompt
+
     // pulling the user input from the addEmployeePrompt questions
     const response = await inquirer.prompt(addEmployeePrompt);
 
@@ -198,7 +219,27 @@ async function addEmployeeFunct() {
 
 // 7. Update Employee Role submenu
 async function updateEmployeeFunct() {
-    // CODE HERE
+
+    // pulling the user input from the updateEmployeePrompt questions
+    const response = await inquirer.prompt(updateEmployeePrompt);
+
+    // variables for cleaner query
+    const employeeChoice = response.employeeToUpdateInq
+    const employeeNewRoleID = response.updatedEmployeeRoleInq
+
+    // query
+    // translate into sql: `replace [employeeChoice]'s role with [employeeNewRole]`
+    // i have no idea if the indexes will work
+    // but [0] is supposed to be their existing id, [1] is supposed to be their first name, and [2] their last
+    const updateEmployeeQuery = `UPDATE employees SET roles_id = REPLACE(roles_id, ${employeeChoice[4]}, ${employeeNewRoleID}) WHERE first_name = '${employeeChoice[1]}' AND last_name = '${employeeChoice[2]}'`;
+    // send query to db
+    const [results, data] = await db.query(updateEmployeeQuery);
+
+    // log added role
+    console.log(`Updated ${employeeChoice}'s role`);
+
+    // return to main menu
+    mainMenuFunct();
 }
 
 
@@ -220,11 +261,11 @@ async function runSQLDB() {
             password: 'pass',
             database: 'employees_db'
         },
-        console.log(`Connected to the employees_db database.`)
+        console.log(`index.js connected to the employees_db database.`)
     );
 
     // open main menu
-    mainMenuFunct();
+    mainMenuFunct(db);
 }
 
 runSQLDB();
