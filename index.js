@@ -13,7 +13,7 @@ let db;
 
 
 // main menu inquirer funct
-async function mainMenuFunct() {
+async function mainMenuFunct(db) {
 
     // response reads whatever answer you give to the main menu prompt
     const response = await inquirer.prompt(mainMenuPrompt);
@@ -40,7 +40,7 @@ async function mainMenuFunct() {
 
     } else if (mainMenuResponse == 'Add a Role') {
         console.log(mainMenuResponse);
-        addRoleFunct();
+        addRoleFunct(db);
 
     } else if (mainMenuResponse == 'Add an Employee') {
         console.log(mainMenuResponse);
@@ -139,12 +139,27 @@ async function addDepartmentFunct() {
 }
 
 
+const addRolePrompt2 = async () => {[
+    {
+        type: 'list',
+        message: "What department does the role belong to?",
+        name: 'addRoleDepartmentInq',
+        // choices runs above funct that returns the array of depts
+        choices: await db.query(`SELECT * FROM department;`)
+    },
+]};
+
+
+
+
+
 // 5. Add Role submenu
-async function addRoleFunct() {
+async function addRoleFunct(db) {
 
 
     // pulling the user input from the addRolePrompt questions
     const response = await inquirer.prompt(addRolePrompt);
+    const response2 = await inquirer.prompt(addRolePrompt2);
 
 
     // variables for cleaner query
@@ -246,11 +261,11 @@ async function runSQLDB() {
             password: 'pass',
             database: 'employees_db'
         },
-        console.log(`Connected to the employees_db database.`)
+        console.log(`index.js connected to the employees_db database.`)
     );
 
     // open main menu
-    mainMenuFunct();
+    mainMenuFunct(db);
 }
 
 runSQLDB();

@@ -11,12 +11,13 @@
 
 
 
-// to do:
+to do:
 
-// 1. choices need to pull from db in prompts.js
-// 2. the final additive is an update rather than an add
-// THEN
-// potentially done??? do recording and submit???
+1. choices need to pull from db in prompts.js
+     2. they have to differentiate btwn name and id
+3. update employee funct needs to have the correct inputs (see #2)
+4. delete unnecessary placeholders in dbs
+5. record and submit
 
 
 
