@@ -1,4 +1,13 @@
-# employee-database
+# Employee Database
+
+## Description & Usage
+Database of employees for your company. Add a department, role, or employee, and edit existing employees.
+
+## Packages
+- Inquirer - https://www.npmjs.com/package/inquirer
+- MySQL2 - https://www.npmjs.com/package/mysql2
+
+## Sources
 - https://stackoverflow.com/questions/45060200/in-node-js-how-do-i-create-a-prompt-loop-using-inquirer
 - https://www.mysqltutorial.org/mysql-basics/
 - https://sidorares.github.io/node-mysql2/docs/documentation/
