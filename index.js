@@ -15,11 +15,13 @@ let db;
 // main menu inquirer funct
 async function mainMenuFunct() {
 
+
     // response reads whatever answer you give to the main menu prompt
     const response = await inquirer.prompt(mainMenuPrompt);
 
     // variable for cleaner code
-    const mainMenuResponse = response.mainMenuInq
+    const mainMenuResponse = response.mainMenuInq;
+
 
     // MENU OUTPUTS
     if (mainMenuResponse == 'View All Departments') {
@@ -56,6 +58,7 @@ async function mainMenuFunct() {
     } else {
         console.log('Error');
     }
+
 
 }
 
@@ -110,39 +113,113 @@ async function viewEmployeesFunct() {
 
 // 4. Add Department submenu
 async function addDepartmentFunct() {
-    inquirer
-        .prompt([
-            {
-                name: 'name',
-                message: 'What is the name of the department?',
-            },
-        ])
-        .then(async (name) => {
-            let department = name;
-            const [results] = await connection.query('INSERT INTO department SET ?', department);
-            console.log(results);
-        })
-        .then(() => console.log(`Added ${department} to the Department Table`))
-        .then(() => {
-            // return to main menu
-            mainMenuFunct();
-        });
+    // pulling input from the user via inquirer and async/await
+    // using `template literals` for the sql queries
+    // ('addNewDepartmentInq' is the name of the input value in the prompts.js file)
+
+    // 'response' pulls the user input from the addDepartmentPrompt question
+    const response = await inquirer.prompt(addDepartmentPrompt);
+
+    // above line & console.log below do the same thing as this promise.prototype.then:
+    // inquirer.prompt(addDepartmentPrompt)
+    //     .then((response) => {
+    //         // takes the user response and logs it to the console!
+    //         console.log(response.addNewDepartment);
+    //     });
+
+
+    // query (add department name as inputted by user)
+    const addDepartmentQuery = `INSERT INTO department (name) VALUES ('${response.addNewDepartmentInq}');`;
+    // sending above query to the db
+    const [results, data] = await db.query(addDepartmentQuery);
+
+
+    // log added department
+    console.log(`Added ${response.addNewDepartmentInq} department to the database.`);
+
+    // return to main menu
+    mainMenuFunct();
 }
 
+
+
+
+// let allDepts = new Promise(() => {
+//     const depts = [];
+//     db.query('SELECT * FROM departments', (err, res) => {
+//         res.forEach((department) => {
+//             depts.push(department.name);
+//         });
+//     });
+//     return depts;
+// });
+
+// const allDepts = async () => {
+//     const depts = [];
+//     await db.query('SELECT * FROM departments', (err, res) => {
+
+//         console.log(res);
+
+//         res.forEach((department) => {
+//             depts.push(department.name);
+//         });
+//     });
+//     return depts;
+// }
+
+
+
+
+
+
+const allDepts = async () => {
+
+    // query the db
+    const viewDepartmentQuery = `SELECT * FROM department;`;
+    const rows = await db.query(viewDepartmentQuery);
+
+    // log results from db query
+    // console.table(results);
+
+    // .name is the names of the depts
+    // .map takes the orig array and transforms it into a new array based off the callback funct
+    // .map(row => row.name)
+    return rows[0].map(row => row.name);
+
+}
+
+
+
+
+const addRolePrompt2 = [
+    {
+    type: 'list',
+    message: "What department does the role belong to?",
+    name: 'addRoleDepartmentInq',
+    choices: allDepts,
+},
+]
 
 
 // 5. Add Role submenu
 async function addRoleFunct() {
     const response = await inquirer.prompt(addRolePrompt);
+    const response2 = await inquirer.prompt(addRolePrompt2);
 
     const newTitle = response.addRoleTitleInq;
     const newSal = response.addRoleSalaryInq;
-    const newDept = response.addRoleDepartmentInq;
+    const newDeptName = response2.addRoleDepartmentInq;
+
+    // query for newDeptID via the newDeptName we pulled
+    const queryForDeptID = `SELECT id FROM department WHERE name = '${newDeptName}';`
+    const [newDeptObject, data] = await db.query(queryForDeptID);
+
+    // pulls the value
+    let newDeptID = newDeptObject.map(a => a.id);
 
     // query
-    const addRoleQuery = 'INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)', [`${newTitle}`, newSal, newDept];
-    // send query to db
-    const [results, data] = await db.query(addRoleQuery);
+    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, ${newDeptID})`
+    const results = await db.query(addRoleQuery);
 
     // log added role
     console.log(`Added ${newTitle} role to the database.`);
@@ -228,7 +305,7 @@ async function runSQLDB() {
     );
 
     // open main menu
-    mainMenuFunct(db);
+    mainMenuFunct();
 }
 
 runSQLDB();
