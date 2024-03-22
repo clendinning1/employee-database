@@ -3,6 +3,8 @@
 ## Description & Usage
 Database of employees for your company. Add a department, role, or employee, and edit existing employees.
 
+Recording: 
+
 ## Packages
 - Inquirer - https://www.npmjs.com/package/inquirer
 - MySQL2 - https://www.npmjs.com/package/mysql2

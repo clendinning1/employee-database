@@ -4,7 +4,7 @@ const inquirer = require('inquirer');
 const { exit } = require('process');
 
 // inquirer prompts in prompts.js
-const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt, updateEmployeePrompt } = require('./lib/prompts');
+const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt } = require('./lib/prompts');
 
 // db for running mysql server
 let db;
@@ -321,23 +321,78 @@ async function addEmployeeFunct() {
 
 
 
+
+
+// QUERY 1 FOR SUBMENU 7
+const updateQuery = async () => {
+    // query the db for info
+    const viewEmployeesQuery = `SELECT * FROM employees;`;
+    const rows = await db.query(viewEmployeesQuery);
+
+    return rows[0].map(row => row.first_name);
+}
+
+
+// QUERY 2 FOR SUBMENU 7
+const updateQuery2 = async () => {
+
+
+    // query the db for roles info
+    const viewRolesQuery = `SELECT * FROM roles;`;
+    const rows = await db.query(viewRolesQuery);
+
+    // .name is the names of the depts
+    // .map takes the orig array and transforms it into a new array based off the callback funct
+    return rows[0].map(row => row.title);
+}
+
+
+
+
+// INQUIRER 1 FOR SUBMENU 7
+const updateEmployeePrompt = [
+    {
+        type: 'list',
+        message: "Which employee's role do you want to update?",
+        name: 'employeeToUpdateInq',
+        choices: updateQuery,
+    },
+]
+
+// INQUIRER 2 FOR SUBMENU 7
+const updateEmployeePrompt2 = [
+    {
+        type: 'list',
+        message: "Which role do you want to assign the selected employee?",
+        name: 'updatedEmployeeRoleInq',
+        choices: updateQuery2,
+    },
+]
+
+
+
+
+
 // 7. Update Employee Role submenu
 async function updateEmployeeFunct() {
 
     // pulling the user input from the updateEmployeePrompt questions
     const response = await inquirer.prompt(updateEmployeePrompt);
+    const response2 = await inquirer.prompt(updateEmployeePrompt2);
 
     // variables for cleaner query
-    const employeeChoice = response.employeeToUpdateInq
-    const employeeNewRoleID = response.updatedEmployeeRoleInq
+    const chosenEmployee = response.employeeToUpdateInq
+    const chosenRoleTitle = response2.updatedEmployeeRoleInq
+
+    // translate chosenRole into id
+    const queryForRoleID = `SELECT id FROM roles WHERE title = '${chosenRoleTitle}';`
+    const [chosenRoleObject, data1] = await db.query(queryForRoleID);
+    let newRoleID = chosenRoleObject.map(a => a.id);
 
     // query
-    // translate into sql: `replace [employeeChoice]'s role with [employeeNewRole]`
-    // i have no idea if the indexes will work
-    // but [0] is supposed to be their existing id, [1] is supposed to be their first name, and [2] their last
-    const updateEmployeeQuery = `UPDATE employees SET roles_id = REPLACE(roles_id, ${employeeChoice[4]}, ${employeeNewRoleID}) WHERE first_name = '${employeeChoice[1]}' AND last_name = '${employeeChoice[2]}'`;
+    const updateEmployeeQuery = `UPDATE employees SET roles_id = REPLACE(roles_id, ${newRoleID}) WHERE first_name = '${chosenEmployee}'`;
     // send query to db
-    const [results, data] = await db.query(updateEmployeeQuery);
+    const [results, data2] = await db.query(updateEmployeeQuery);
 
     // log added role
     console.log(`Updated ${employeeChoice}'s role`);
