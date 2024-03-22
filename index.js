@@ -4,7 +4,7 @@ const inquirer = require('inquirer');
 const { exit } = require('process');
 
 // inquirer prompts in prompts.js
-const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt, updateEmployeePrompt } = require('./lib/prompts');
+const { mainMenuPrompt, addDepartmentPrompt, addRolePrompt, addEmployeePrompt } = require('./lib/prompts');
 
 // db for running mysql server
 let db;
@@ -13,13 +13,15 @@ let db;
 
 
 // main menu inquirer funct
-async function mainMenuFunct(db) {
+async function mainMenuFunct() {
+
 
     // response reads whatever answer you give to the main menu prompt
     const response = await inquirer.prompt(mainMenuPrompt);
 
     // variable for cleaner code
-    const mainMenuResponse = response.mainMenuInq
+    const mainMenuResponse = response.mainMenuInq;
+
 
     // MENU OUTPUTS
     if (mainMenuResponse == 'View All Departments') {
@@ -40,7 +42,7 @@ async function mainMenuFunct(db) {
 
     } else if (mainMenuResponse == 'Add a Role') {
         console.log(mainMenuResponse);
-        addRoleFunct(db);
+        addRoleFunct();
 
     } else if (mainMenuResponse == 'Add an Employee') {
         console.log(mainMenuResponse);
@@ -56,6 +58,7 @@ async function mainMenuFunct(db) {
     } else {
         console.log('Error');
     }
+
 
 }
 
@@ -139,47 +142,83 @@ async function addDepartmentFunct() {
 }
 
 
-const addRolePrompt2 = async () => {[
+
+
+// let allDepts = new Promise(() => {
+//     const depts = [];
+//     db.query('SELECT * FROM departments', (err, res) => {
+//         res.forEach((department) => {
+//             depts.push(department.name);
+//         });
+//     });
+//     return depts;
+// });
+
+// const allDepts = async () => {
+//     const depts = [];
+//     await db.query('SELECT * FROM departments', (err, res) => {
+
+//         console.log(res);
+
+//         res.forEach((department) => {
+//             depts.push(department.name);
+//         });
+//     });
+//     return depts;
+// }
+
+
+
+
+
+
+// QUERY FOR 5
+const allDepts = async () => {
+
+    // query the db for department info
+    const viewDepartmentQuery = `SELECT * FROM department;`;
+    const rows = await db.query(viewDepartmentQuery);
+
+    // log results from db query
+    // console.table(results);
+
+    // .name is the names of the depts
+    // .map takes the orig array and transforms it into a new array based off the callback funct
+    // .map(row => row.name)
+    return rows[0].map(row => row.name);
+
+}
+
+// INQUIRER FOR 5
+const addRolePrompt2 = [
     {
         type: 'list',
         message: "What department does the role belong to?",
         name: 'addRoleDepartmentInq',
-        // choices runs above funct that returns the array of depts
-        choices: await db.query(`SELECT * FROM department;`)
+        choices: allDepts,
     },
-]};
-
-
-
+]
 
 
 // 5. Add Role submenu
-async function addRoleFunct(db) {
-
-
-    // pulling the user input from the addRolePrompt questions
+async function addRoleFunct() {
     const response = await inquirer.prompt(addRolePrompt);
     const response2 = await inquirer.prompt(addRolePrompt2);
 
+    const newTitle = response.addRoleTitleInq;
+    const newSal = response.addRoleSalaryInq;
+    const chosenDeptName = response2.addRoleDepartmentInq;
 
-    // variables for cleaner query
-    // (addRole[X]Inq is the location for each input in prompts.js)
-    // (response.addRole[X]Inq calls the user input to this particular response)
-    const newTitle = response.addRoleTitleInq
-    const newSal = response.addRoleSalaryInq
+    // query for newDeptID via the chosenDeptName we pulled
+    const queryForDeptID = `SELECT id FROM department WHERE name = '${chosenDeptName}';`
+    const [newDeptObject, data] = await db.query(queryForDeptID);
 
-    // CODE HERE
-    // need to be able to differentiate
-    // maybe i should just put the choices prompt separate in this function?
-    // idk 
-    const newDeptName = ''
-    const newDeptID = ''
-
+    // pulls the value
+    let newDeptID = newDeptObject.map(a => a.id);
 
     // query
-    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, '${newDeptID}');`;
-    // send query to db
-    const [results, data] = await db.query(addRoleQuery);
+    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, ${newDeptID})`
+    const results = await db.query(addRoleQuery);
 
     // log added role
     console.log(`Added ${newTitle} role to the database.`);
@@ -189,24 +228,89 @@ async function addRoleFunct(db) {
 }
 
 
+
+
+
+
+// QUERY 1 FOR SUBMENU 6
+const empQuery2 = async () => {
+
+    // query the db for roles info
+    const viewRolesQuery = `SELECT * FROM roles;`;
+    const rows = await db.query(viewRolesQuery);
+
+    // .name is the names of the depts
+    // .map takes the orig array and transforms it into a new array based off the callback funct
+    return rows[0].map(row => row.title);
+
+}
+
+
+// QUERY 2 FOR SUBMENU 6
+const empQuery3 = async () => {
+
+    // query the db for department info
+    const viewManagersQuery = `SELECT * FROM employees;`;
+    const rows = await db.query(viewManagersQuery);
+
+    return rows[0].map(row => row.first_name);
+}
+
+// INQUIRER 1 FOR SUBMENU 6
+const addEmployeePrompt2 = [
+    {
+        type: 'list',
+        message: "What is the employee's role?",
+        name: 'addEmployeeRoleInq',
+        choices: empQuery2,
+    },
+]
+
+// INQUIRER 2 FOR SUBMENU 6
+const addEmployeePrompt3 = [
+    {
+        type: 'list',
+        message: "Who is the employee's manager?",
+        name: 'addEmployeeManagerInq',
+        choices: empQuery3,
+    },
+]
+
+
 // 6. Add Employee submenu
 async function addEmployeeFunct() {
 
     // pulling the user input from the addEmployeePrompt questions
     const response = await inquirer.prompt(addEmployeePrompt);
+    const response2 = await inquirer.prompt(addEmployeePrompt2);
+    const response3 = await inquirer.prompt(addEmployeePrompt3);
 
     // variables for cleaner query
     // (addEmployee[X]Inq is the location for each input in prompts.js)
     // (response.addEmployee[X]Inq calls the user input to this particular response)
     const newFirstName = response.addEmployeeFirstNameInq
     const newLastName = response.addEmployeeLastNameInq
-    const newRole = response.addEmployeeRoleInq
-    const newManager = response.addEmployeeManagerInq
+    const chosenRoleTitle = response2.addEmployeeRoleInq
+    const chosenManagerFirstName = response3.addEmployeeManagerInq
+
+
+    // translate the role name into the role id
+    const queryForRoleID = `SELECT id FROM roles WHERE title = '${chosenRoleTitle}';`
+    const [chosenRoleObject, data] = await db.query(queryForRoleID);
+    let newRoleID = chosenRoleObject.map(a => a.id);
+
+
+    // translate the manager name into the manager id
+    const queryForManagerID = `SELECT id FROM employees WHERE first_name = '${chosenManagerFirstName}';`
+    const [chosenManagerObject, data2] = await db.query(queryForManagerID);
+    let newManagerID = chosenManagerObject.map(a => a.id);
+
+
 
     // query
-    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${newFirstName}', '${newLastName}', ${newRole}, ${newManager});`;
+    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${newFirstName}', '${newLastName}', ${newRoleID}, ${newManagerID});`;
     // send query to db
-    const [results, data] = await db.query(addEmployeeQuery);
+    const [results, data3] = await db.query(addEmployeeQuery);
 
     // log added role
     console.log(`Added ${newFirstName} ${newLastName} to the database.`);
@@ -217,26 +321,81 @@ async function addEmployeeFunct() {
 
 
 
+
+
+// QUERY 1 FOR SUBMENU 7
+const updateQuery = async () => {
+    // query the db for info
+    const viewEmployeesQuery = `SELECT * FROM employees;`;
+    const rows = await db.query(viewEmployeesQuery);
+
+    return rows[0].map(row => row.first_name);
+}
+
+
+// QUERY 2 FOR SUBMENU 7
+const updateQuery2 = async () => {
+
+
+    // query the db for roles info
+    const viewRolesQuery = `SELECT * FROM roles;`;
+    const rows = await db.query(viewRolesQuery);
+
+    // .name is the names of the depts
+    // .map takes the orig array and transforms it into a new array based off the callback funct
+    return rows[0].map(row => row.title);
+}
+
+
+
+
+// INQUIRER 1 FOR SUBMENU 7
+const updateEmployeePrompt = [
+    {
+        type: 'list',
+        message: "Which employee's role do you want to update?",
+        name: 'employeeToUpdateInq',
+        choices: updateQuery,
+    },
+]
+
+// INQUIRER 2 FOR SUBMENU 7
+const updateEmployeePrompt2 = [
+    {
+        type: 'list',
+        message: "Which role do you want to assign the selected employee?",
+        name: 'updatedEmployeeRoleInq',
+        choices: updateQuery2,
+    },
+]
+
+
+
+
+
 // 7. Update Employee Role submenu
 async function updateEmployeeFunct() {
 
     // pulling the user input from the updateEmployeePrompt questions
     const response = await inquirer.prompt(updateEmployeePrompt);
+    const response2 = await inquirer.prompt(updateEmployeePrompt2);
 
     // variables for cleaner query
-    const employeeChoice = response.employeeToUpdateInq
-    const employeeNewRoleID = response.updatedEmployeeRoleInq
+    const chosenEmployee = response.employeeToUpdateInq
+    const chosenRoleTitle = response2.updatedEmployeeRoleInq
+
+    // translate chosenRole into id
+    const queryForRoleID = `SELECT id FROM roles WHERE title = '${chosenRoleTitle}';`
+    const [chosenRoleObject, data1] = await db.query(queryForRoleID);
+    let newRoleID = chosenRoleObject.map(a => a.id);
 
     // query
-    // translate into sql: `replace [employeeChoice]'s role with [employeeNewRole]`
-    // i have no idea if the indexes will work
-    // but [0] is supposed to be their existing id, [1] is supposed to be their first name, and [2] their last
-    const updateEmployeeQuery = `UPDATE employees SET roles_id = REPLACE(roles_id, ${employeeChoice[4]}, ${employeeNewRoleID}) WHERE first_name = '${employeeChoice[1]}' AND last_name = '${employeeChoice[2]}'`;
+    const updateEmployeeQuery = `UPDATE employees SET roles_id = ${newRoleID} WHERE first_name = '${chosenEmployee}'`;
     // send query to db
-    const [results, data] = await db.query(updateEmployeeQuery);
+    const [results, data2] = await db.query(updateEmployeeQuery);
 
     // log added role
-    console.log(`Updated ${employeeChoice}'s role`);
+    console.log(`Updated ${chosenEmployee}'s role`);
 
     // return to main menu
     mainMenuFunct();
@@ -265,7 +424,7 @@ async function runSQLDB() {
     );
 
     // open main menu
-    mainMenuFunct(db);
+    mainMenuFunct();
 }
 
 runSQLDB();
