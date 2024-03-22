@@ -207,10 +207,10 @@ async function addRoleFunct() {
 
     const newTitle = response.addRoleTitleInq;
     const newSal = response.addRoleSalaryInq;
-    const newDeptName = response2.addRoleDepartmentInq;
+    const chosenDeptName = response2.addRoleDepartmentInq;
 
-    // query for newDeptID via the newDeptName we pulled
-    const queryForDeptID = `SELECT id FROM department WHERE name = '${newDeptName}';`
+    // query for newDeptID via the chosenDeptName we pulled
+    const queryForDeptID = `SELECT id FROM department WHERE name = '${chosenDeptName}';`
     const [newDeptObject, data] = await db.query(queryForDeptID);
 
     // pulls the value
@@ -251,21 +251,9 @@ const empQuery3 = async () => {
 
     // query the db for department info
     const viewManagersQuery = `SELECT * FROM employees;`;
-    const [allEmployees, sqlInfo] = await db.query(viewManagersQuery);
+    const rows = await db.query(viewManagersQuery);
 
-    console.log(allEmployees);
-    console.log("break");
-    console.log(allEmployees[0])
-
-    let firstname = rows[0].map(row => row.first_name);
-    let lastname = rows[0].map(row => row.last_name);
-
-    let managerName = `'${firstname} ${lastname}'`
-
-    console.log(managerName);
-
-    return managerName;
-
+    return rows[0].map(row => row.first_name);
 }
 
 // INQUIRER 1 FOR SUBMENU 6
@@ -302,22 +290,27 @@ async function addEmployeeFunct() {
     // (response.addEmployee[X]Inq calls the user input to this particular response)
     const newFirstName = response.addEmployeeFirstNameInq
     const newLastName = response.addEmployeeLastNameInq
+    const chosenRoleTitle = response2.addEmployeeRoleInq
+    const chosenManagerFirstName = response3.addEmployeeManagerInq
 
 
+    // translate the role name into the role id
+    const queryForRoleID = `SELECT id FROM roles WHERE title = '${chosenRoleTitle}';`
+    const [chosenRoleObject, data] = await db.query(queryForRoleID);
+    let newRoleID = chosenRoleObject.map(a => a.id);
 
 
+    // translate the manager name into the manager id
+    const queryForManagerID = `SELECT id FROM employees WHERE first_name = '${chosenManagerFirstName}';`
+    const [chosenManagerObject, data2] = await db.query(queryForManagerID);
+    let newManagerID = chosenManagerObject.map(a => a.id);
 
 
-
-
-
-    const newRole = response2.addEmployeeRoleInq
-    const newManager = response3.addEmployeeManagerInq
 
     // query
-    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${newFirstName}', '${newLastName}', ${newRole}, ${newManager});`;
+    const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${newFirstName}', '${newLastName}', ${newRoleID}, ${newManagerID});`;
     // send query to db
-    const [results, data] = await db.query(addEmployeeQuery);
+    const [results, data3] = await db.query(addEmployeeQuery);
 
     // log added role
     console.log(`Added ${newFirstName} ${newLastName} to the database.`);
