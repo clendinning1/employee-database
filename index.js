@@ -390,12 +390,12 @@ async function updateEmployeeFunct() {
     let newRoleID = chosenRoleObject.map(a => a.id);
 
     // query
-    const updateEmployeeQuery = `UPDATE employees SET roles_id = REPLACE(roles_id, ${newRoleID}) WHERE first_name = '${chosenEmployee}'`;
+    const updateEmployeeQuery = `UPDATE employees SET roles_id = ${newRoleID} WHERE first_name = '${chosenEmployee}'`;
     // send query to db
     const [results, data2] = await db.query(updateEmployeeQuery);
 
     // log added role
-    console.log(`Updated ${employeeChoice}'s role`);
+    console.log(`Updated ${chosenEmployee}'s role`);
 
     // return to main menu
     mainMenuFunct();
