@@ -172,9 +172,10 @@ async function addDepartmentFunct() {
 
 
 
+// QUERY FOR 5
 const allDepts = async () => {
 
-    // query the db
+    // query the db for department info
     const viewDepartmentQuery = `SELECT * FROM department;`;
     const rows = await db.query(viewDepartmentQuery);
 
@@ -188,16 +189,14 @@ const allDepts = async () => {
 
 }
 
-
-
-
+// INQUIRER FOR 5
 const addRolePrompt2 = [
     {
-    type: 'list',
-    message: "What department does the role belong to?",
-    name: 'addRoleDepartmentInq',
-    choices: allDepts,
-},
+        type: 'list',
+        message: "What department does the role belong to?",
+        name: 'addRoleDepartmentInq',
+        choices: allDepts,
+    },
 ]
 
 
@@ -229,19 +228,91 @@ async function addRoleFunct() {
 }
 
 
+
+
+
+
+// QUERY 1 FOR SUBMENU 6
+const empQuery2 = async () => {
+
+    // query the db for roles info
+    const viewRolesQuery = `SELECT * FROM roles;`;
+    const rows = await db.query(viewRolesQuery);
+
+    // .name is the names of the depts
+    // .map takes the orig array and transforms it into a new array based off the callback funct
+    return rows[0].map(row => row.title);
+
+}
+
+
+// QUERY 2 FOR SUBMENU 6
+const empQuery3 = async () => {
+
+    // query the db for department info
+    const viewManagersQuery = `SELECT * FROM employees;`;
+    const [allEmployees, sqlInfo] = await db.query(viewManagersQuery);
+
+    console.log(allEmployees);
+    console.log("break");
+    console.log(allEmployees[0])
+
+    let firstname = rows[0].map(row => row.first_name);
+    let lastname = rows[0].map(row => row.last_name);
+
+    let managerName = `'${firstname} ${lastname}'`
+
+    console.log(managerName);
+
+    return managerName;
+
+}
+
+// INQUIRER 1 FOR SUBMENU 6
+const addEmployeePrompt2 = [
+    {
+        type: 'list',
+        message: "What is the employee's role?",
+        name: 'addEmployeeRoleInq',
+        choices: empQuery2,
+    },
+]
+
+// INQUIRER 2 FOR SUBMENU 6
+const addEmployeePrompt3 = [
+    {
+        type: 'list',
+        message: "Who is the employee's manager?",
+        name: 'addEmployeeManagerInq',
+        choices: empQuery3,
+    },
+]
+
+
 // 6. Add Employee submenu
 async function addEmployeeFunct() {
 
     // pulling the user input from the addEmployeePrompt questions
     const response = await inquirer.prompt(addEmployeePrompt);
+    const response2 = await inquirer.prompt(addEmployeePrompt2);
+    const response3 = await inquirer.prompt(addEmployeePrompt3);
 
     // variables for cleaner query
     // (addEmployee[X]Inq is the location for each input in prompts.js)
     // (response.addEmployee[X]Inq calls the user input to this particular response)
     const newFirstName = response.addEmployeeFirstNameInq
     const newLastName = response.addEmployeeLastNameInq
-    const newRole = response.addEmployeeRoleInq
-    const newManager = response.addEmployeeManagerInq
+
+
+
+
+
+
+
+
+
+    const newRole = response2.addEmployeeRoleInq
+    const newManager = response3.addEmployeeManagerInq
 
     // query
     const addEmployeeQuery = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${newFirstName}', '${newLastName}', ${newRole}, ${newManager});`;
