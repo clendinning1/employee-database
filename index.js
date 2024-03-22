@@ -13,7 +13,7 @@ let db;
 
 
 // main menu inquirer funct
-async function mainMenuFunct(db) {
+async function mainMenuFunct() {
 
     // response reads whatever answer you give to the main menu prompt
     const response = await inquirer.prompt(mainMenuPrompt);
@@ -40,7 +40,7 @@ async function mainMenuFunct(db) {
 
     } else if (mainMenuResponse == 'Add a Role') {
         console.log(mainMenuResponse);
-        addRoleFunct(db);
+        addRoleFunct();
 
     } else if (mainMenuResponse == 'Add an Employee') {
         console.log(mainMenuResponse);
@@ -110,74 +110,37 @@ async function viewEmployeesFunct() {
 
 // 4. Add Department submenu
 async function addDepartmentFunct() {
-    // pulling input from the user via inquirer and async/await
-    // using `template literals` for the sql queries
-    // ('addNewDepartmentInq' is the name of the input value in the prompts.js file)
-
-    // 'response' pulls the user input from the addDepartmentPrompt question
-    const response = await inquirer.prompt(addDepartmentPrompt);
-
-    // above line & console.log below do the same thing as this promise.prototype.then:
-    // inquirer.prompt(addDepartmentPrompt)
-    //     .then((response) => {
-    //         // takes the user response and logs it to the console!
-    //         console.log(response.addNewDepartment);
-    //     });
-
-
-    // query (add department name as inputted by user)
-    const addDepartmentQuery = `INSERT INTO department (name) VALUES ('${response.addNewDepartmentInq}');`;
-    // sending above query to the db
-    const [results, data] = await db.query(addDepartmentQuery);
-
-
-    // log added department
-    console.log(`Added ${response.addNewDepartmentInq} department to the database.`);
-
-    // return to main menu
-    mainMenuFunct();
+    inquirer
+        .prompt([
+            {
+                name: 'name',
+                message: 'What is the name of the department?',
+            },
+        ])
+        .then(async (name) => {
+            let department = name;
+            const [results] = await connection.query('INSERT INTO department SET ?', department);
+            console.log(results);
+        })
+        .then(() => console.log(`Added ${department} to the Department Table`))
+        .then(() => {
+            // return to main menu
+            mainMenuFunct();
+        });
 }
-
-
-const addRolePrompt2 = async () => {[
-    {
-        type: 'list',
-        message: "What department does the role belong to?",
-        name: 'addRoleDepartmentInq',
-        // choices runs above funct that returns the array of depts
-        choices: await db.query(`SELECT * FROM department;`)
-    },
-]};
-
-
 
 
 
 // 5. Add Role submenu
-async function addRoleFunct(db) {
-
-
-    // pulling the user input from the addRolePrompt questions
+async function addRoleFunct() {
     const response = await inquirer.prompt(addRolePrompt);
-    const response2 = await inquirer.prompt(addRolePrompt2);
 
-
-    // variables for cleaner query
-    // (addRole[X]Inq is the location for each input in prompts.js)
-    // (response.addRole[X]Inq calls the user input to this particular response)
-    const newTitle = response.addRoleTitleInq
-    const newSal = response.addRoleSalaryInq
-
-    // CODE HERE
-    // need to be able to differentiate
-    // maybe i should just put the choices prompt separate in this function?
-    // idk 
-    const newDeptName = ''
-    const newDeptID = ''
-
+    const newTitle = response.addRoleTitleInq;
+    const newSal = response.addRoleSalaryInq;
+    const newDept = response.addRoleDepartmentInq;
 
     // query
-    const addRoleQuery = `INSERT INTO roles (title, salary, department_id) VALUES ('${newTitle}', ${newSal}, '${newDeptID}');`;
+    const addRoleQuery = 'INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)', [`${newTitle}`, newSal, newDept];
     // send query to db
     const [results, data] = await db.query(addRoleQuery);
 
