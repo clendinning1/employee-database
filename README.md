@@ -3,7 +3,7 @@
 ## Description & Usage
 Database of employees for your company. Add a department, role, or employee, and edit existing employees.
 
-Recording: 
+Recording: https://drive.google.com/file/d/1G3zI8Aso9kLox39Aqn0wzcty3lcXEYSV/view
 
 ## Packages
 - Inquirer - https://www.npmjs.com/package/inquirer
